@@ -2,104 +2,297 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Nosso Cantinho</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Pacifico&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #ffe6e6;
+            background-color: #f8e1e1;
             color: #333;
             text-align: center;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
             box-sizing: border-box;
-            /* Centralizando verticalmente */
             min-height: 100vh;
             display: flex;
             align-items: center;
             justify-content: center;
+            overflow-x: hidden; 
         }
+
+        .bg-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none; 
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .floating-heart {
+            position: absolute;
+            bottom: -10vh; 
+            opacity: 0.6;
+            animation: floatUp linear forwards;
+        }
+
+        @keyframes floatUp {
+            to { transform: translateY(-110vh); opacity: 0; }
+        }
+
         .container {
-            background: white;
+            background-color: #fff9f0; 
             width: 100%;
-            max-width: 400px;
-            padding: 30px;
-            border-radius: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
-            /* Animação suave */
+            max-width: 450px;
+            padding: 40px 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            position: relative;
             animation: fadeIn 0.8s ease-in-out;
+            overflow: hidden; 
+            box-sizing: border-box;
+            z-index: 1; 
         }
+
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://www.transparenttextures.com/patterns/parchment.png');
+            opacity: 0.15;
+            z-index: 0;
+            pointer-events: none;
+        }
+
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-20px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        h1 { color: #d63031; }
-        input[type="password"], input[type="text"] {
-            width: 90%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
+
+        #login-screen, .internal-screen {
+            position: relative;
+            z-index: 1;
         }
+
+        .pulsing-heart {
+            font-size: 70px;
+            color: #d63031;
+            animation: pulse 1.5s infinite ease-in-out;
+            display: inline-block;
+            cursor: default;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        h1.letter-title {
+            font-family: 'Dancing Script', cursive; 
+            color: #b71c1c;
+            font-size: 3.2rem;
+            margin: 0;
+            margin-top: 10px;
+            line-height: 1.2;
+        }
+
+        .intro-text {
+            font-style: italic;
+            color: #666;
+            font-size: 16px;
+            margin: 10px 0 15px 0;
+            line-height: 1.4;
+            padding: 0 10px;
+        }
+
+        h2.letter-subtitle {
+            font-family: 'Pacifico', cursive;
+            color: #d32f2f;
+            font-size: 1.2rem;
+            margin: 10px 0 25px;
+            font-weight: normal;
+        }
+
+        input[type="password"], textarea {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            box-sizing: border-box;
+            background-color: #fafafa;
+            transition: border-color 0.3s;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-size: 16px; 
+        }
+
+        textarea { resize: vertical; min-height: 100px; }
+        input[type="password"]:focus, textarea:focus { border-color: #ff8a80; outline: none; }
+
         button {
-            background-color: #ff7675;
+            background-color: #ff5252;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        button:hover { background-color: #d63031; }
-        .hidden { display: none; }
-        .message-box {
-            background-color: #fab1a0;
-            padding: 20px;
+            padding: 12px 25px;
             border-radius: 10px;
-            margin-top: 20px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 10px;
+            transition: background-color 0.3s, transform 0.1s;
+            width: 100%; 
+            box-sizing: border-box;
+        }
+
+        button:hover:not(:disabled) { background-color: #d32f2f; }
+        button:active:not(:disabled) { transform: scale(0.98); }
+        button:disabled { background-color: #ffbaba; cursor: not-allowed; }
+
+        .btn-amei {
+            background-color: #ff4081;
+            margin-top: 15px;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-amei:hover { background-color: #c51162; }
+
+        @keyframes popIn {
+            from { transform: scale(0); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .hidden { display: none !important; }
+
+        .internal-screen h1 {
+            font-family: 'Pacifico', cursive;
+            color: #b71c1c;
+            margin-bottom: 5px;
+            font-weight: normal;
+            font-size: 2rem;
+        }
+
+        .internal-screen p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 15px;
+        }
+
+        .likes-status {
+            background-color: #fff0f3;
+            border: 1px dashed #ff8a80;
+            padding: 10px;
+            border-radius: 10px;
+            color: #d81b60;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
+
+        .message-box {
+            background-color: #ffebee;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px auto 0;
+            width: 100%;
+            box-sizing: border-box;
             font-size: 18px;
             font-style: italic;
+            border: 1px solid #ffcdd2;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+            line-height: 1.6;
+            word-wrap: break-word;
+            white-space: pre-wrap; 
+            text-align: left; 
+            min-height: 80px; 
         }
+
+        .cursor::after {
+            content: '|';
+            animation: blink 1s step-start infinite;
+        }
+        @keyframes blink { 50% { opacity: 0; } }
+
         .logout {
-            background-color: #b2bec3;
-            font-size: 12px;
+            background-color: #f5f5f5;
+            color: #777;
+            font-size: 15px;
             margin-top: 30px;
+            border: 1px solid #e0e0e0;
+        }
+        .logout:hover { background-color: #e0e0e0; color: #555; }
+
+        .feedback-msg { min-height: 24px; margin-top: 5px; font-weight: bold; font-size: 14px; }
+        #erro-login { color: #c62828; }
+        #sucesso-msg { color: #2e7d32; }
+
+        @media (max-width: 480px) {
+            .container { padding: 30px 20px; }
+            h1.letter-title { font-size: 2.8rem; }
+            .intro-text { font-size: 15px; }
+            .internal-screen h1 { font-size: 1.7rem; }
+            .message-box { font-size: 16px; padding: 15px; }
         }
     </style>
 </head>
 <body>
 
+<div id="bg-hearts" class="bg-hearts"></div>
+
 <div class="container">
     <div id="login-screen">
-        <h1>❤️ Nosso Cantinho ❤️</h1>
-        <p>Digite sua senha para entrar:</p>
+        <div class="pulsing-heart">❤️</div>
+        <h1 class="letter-title">Nosso Cantinho</h1>
+        <p class="intro-text">Criei este espaço pensando em você, meu amor, com todo o carinho do mundo.</p>
+        <h2 class="letter-subtitle">digite a senha para abrir esta carta</h2>
+        
         <input type="password" id="password" placeholder="Sua senha secreta">
-        <br>
-        <button onclick="fazerLogin()">Entrar</button>
-        <p id="erro-login" style="color: red; display: none;">Senha incorreta!</p>
+        <div class="feedback-msg">
+            <span id="erro-login" class="hidden">Senha incorreta!</span>
+        </div>
+        <button onclick="fazerLogin()">Abrir Carta</button>
     </div>
 
-    <div id="boyfriend-screen" class="hidden">
-        <h1>Painel do Namorado 👑</h1>
-        <p>Adicione uma nova mensagem romântica para ela:</p>
-        <input type="text" id="nova-mensagem" placeholder="Ex: Amo o seu sorriso...">
-        <br>
+    <div id="boyfriend-screen" class="hidden internal-screen">
+        <h1>Meu Painel 👑</h1>
+        
+        <div class="likes-status">
+            Ela já amou <span id="contador-likes">0</span> mensagens 💖
+        </div>
+
+        <p>Escreva um carinho para ela:</p>
+        <textarea id="nova-mensagem" placeholder="Ex: Amo o seu sorriso..."></textarea>
+        <div class="feedback-msg">
+            <span id="sucesso-msg" class="hidden">Mensagem salva com carinho!</span>
+        </div>
         <button onclick="adicionarMensagem()">Salvar Mensagem</button>
-        <p id="sucesso-msg" style="color: green; display: none;">Mensagem salva no Firebase!</p>
         <br>
-        <button class="logout" onclick="sair()">Sair</button>
+        <button class="logout" onclick="sair()">Fechar Painel</button>
     </div>
 
-    <div id="girlfriend-screen" class="hidden">
+    <div id="girlfriend-screen" class="hidden internal-screen">
         <h1>Para a mulher da minha vida 🌹</h1>
-        <p>Clique no botão para receber um carinho:</p>
-        <button onclick="mostrarMensagemAleatoria()">Ver Mensagem</button>
+        <p>Toque no botão abaixo para receber um carinho:</p>
+        
+        <button id="btn-gerar" onclick="mostrarMensagemAleatoria()">Gerar Mensagem</button>
         
         <div id="display-mensagem" class="message-box hidden"></div>
+        
+        <button id="btn-amei" class="btn-amei hidden" onclick="enviarAmei()">Amei! 💖</button>
+
         <br>
-        <button class="logout" onclick="sair()">Sair</button>
+        <button class="logout" onclick="sair()">Fechar Carta</button>
     </div>
 </div>
 
@@ -107,7 +300,6 @@
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
 
 <script>
-    // Configurações do Firebase
     const firebaseConfig = {
         apiKey: "AIzaSyBD3vyhAkFrtkvlHUGhGde5s2goX6NLTNE",
         authDomain: "gabriel-fabiola.firebaseapp.com",
@@ -118,42 +310,50 @@
         measurementId: "G-KJPJDYBSH7"
     };
 
-    // Inicializando o Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
 
-    // Senhas de acesso
-    const senhaNamorado = "ele123";
-    const senhaNamorada = "ela123";
+    const senhaNamorado = "0725";
+    const senhaNamorada = "0417";
 
     let mensagens = [];
+    let mensagensNaoLidas = []; 
+    let ultimaMensagemExibida = ""; 
+    let digitando = false; 
 
-    // ================= EVENTOS DE TECLADO (Melhoria) =================
-    // Limpa o erro e permite usar a tecla "Enter" no login
-    document.getElementById("password").addEventListener("keypress", function(event) {
-        document.getElementById("erro-login").style.display = "none";
-        if (event.key === "Enter") {
-            fazerLogin();
-        }
-    });
+    function criarCoracao() {
+        const bg = document.getElementById("bg-hearts");
+        const coracao = document.createElement("div");
+        coracao.classList.add("floating-heart");
+        coracao.innerText = "❤️";
+        coracao.style.fontSize = (Math.random() * 20 + 10) + "px";
+        coracao.style.left = Math.random() * 100 + "vw";
+        const duracao = Math.random() * 6 + 6;
+        coracao.style.animationDuration = duracao + "s";
+        bg.appendChild(coracao);
+        setTimeout(() => coracao.remove(), duracao * 1000);
+    }
+    setInterval(criarCoracao, 400);
 
-    // Permite usar a tecla "Enter" para salvar a mensagem
-    document.getElementById("nova-mensagem").addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            adicionarMensagem();
-        }
-    });
-    // =================================================================
-
-    // Busca as mensagens direto do banco de dados quando a página carrega
-    function carregarMensagens() {
+    function carregarDados() {
         db.collection("mensagens").onSnapshot((snapshot) => {
             mensagens = [];
-            snapshot.forEach((doc) => {
-                mensagens.push(doc.data().texto);
-            });
+            snapshot.forEach((doc) => mensagens.push(doc.data().texto));
+            
+            mensagensNaoLidas = [...mensagens];
+        });
+
+        db.collection("dados").doc("status").onSnapshot((doc) => {
+            if (doc.exists) {
+                document.getElementById("contador-likes").innerText = doc.data().likes || 0;
+            }
         });
     }
+
+    document.getElementById("password").addEventListener("keypress", function(event) {
+        document.getElementById("erro-login").classList.add("hidden");
+        if (event.key === "Enter") fazerLogin();
+    });
 
     function fazerLogin() {
         const senha = document.getElementById("password").value;
@@ -162,13 +362,14 @@
         if (senha === senhaNamorado) {
             document.getElementById("login-screen").classList.add("hidden");
             document.getElementById("boyfriend-screen").classList.remove("hidden");
-            erro.style.display = "none";
+            erro.classList.add("hidden");
         } else if (senha === senhaNamorada) {
             document.getElementById("login-screen").classList.add("hidden");
             document.getElementById("girlfriend-screen").classList.remove("hidden");
-            erro.style.display = "none";
+            mensagensNaoLidas = [...mensagens];
+            erro.classList.add("hidden");
         } else {
-            erro.style.display = "block";
+            erro.classList.remove("hidden");
         }
     }
 
@@ -177,7 +378,6 @@
         const msg = inputMsg.value.trim();
 
         if (msg !== "") {
-            // Salva o documento no Cloud Firestore
             db.collection("mensagens").add({
                 texto: msg,
                 dataCriacao: firebase.firestore.FieldValue.serverTimestamp()
@@ -185,40 +385,112 @@
             .then(() => {
                 inputMsg.value = "";
                 const sucesso = document.getElementById("sucesso-msg");
-                sucesso.style.display = "block";
-                setTimeout(() => sucesso.style.display = "none", 3000);
+                sucesso.classList.remove("hidden");
+                setTimeout(() => sucesso.classList.add("hidden"), 3000);
             })
-            .catch((error) => {
-                console.error("Erro ao salvar: ", error);
-                alert("Ops, algo deu errado ao salvar.");
-            });
+            .catch((error) => console.error("Erro ao salvar: ", error));
         }
     }
 
     function mostrarMensagemAleatoria() {
+        if (digitando) return; 
+
         const display = document.getElementById("display-mensagem");
+        const btnGerar = document.getElementById("btn-gerar");
+        const btnAmei = document.getElementById("btn-amei");
         
+        btnAmei.classList.add("hidden"); 
+
         if (mensagens.length === 0) {
             display.innerText = "Nenhuma mensagem cadastrada ainda. Diga para ele escrever algo! ❤️";
             display.classList.remove("hidden");
             return;
         }
-        
-        const indiceAleatorio = Math.floor(Math.random() * mensagens.length);
-        display.innerText = mensagens[indiceAleatorio];
+
+        if (mensagensNaoLidas.length === 0) {
+            mensagensNaoLidas = [...mensagens];
+        }
+
+        let indiceSorteado = Math.floor(Math.random() * mensagensNaoLidas.length);
+        let textoEscolhido = mensagensNaoLidas[indiceSorteado];
+
+        if (mensagens.length > 1 && textoEscolhido === ultimaMensagemExibida) {
+            indiceSorteado = (indiceSorteado + 1) % mensagensNaoLidas.length;
+            textoEscolhido = mensagensNaoLidas[indiceSorteado];
+        }
+
+        mensagensNaoLidas.splice(indiceSorteado, 1);
+        ultimaMensagemExibida = textoEscolhido; 
+
         display.classList.remove("hidden");
+        display.classList.add("cursor");
+        display.innerText = "";
+        digitando = true;
+        btnGerar.disabled = true; 
+        btnGerar.innerText = "Escrevendo...";
+
+        let i = 0;
+        const velocidade = 80; // AQUI ESTÁ A MUDANÇA: de 50 para 80! (milissegundos)
+
+        function digitar() {
+            if (i < textoEscolhido.length) {
+                display.innerHTML += textoEscolhido.charAt(i);
+                i++;
+                setTimeout(digitar, velocidade);
+            } else {
+                digitando = false;
+                display.classList.remove("cursor");
+                btnGerar.disabled = false;
+                btnGerar.innerText = "Gerar Mensagem";
+                btnAmei.classList.remove("hidden"); 
+            }
+        }
+
+        digitar();
+    }
+
+    function enviarAmei() {
+        const btnAmei = document.getElementById("btn-amei");
+        btnAmei.classList.add("hidden"); 
+
+        const heartFeedback = document.createElement("div");
+        heartFeedback.innerText = "💖";
+        heartFeedback.style.position = "absolute";
+        heartFeedback.style.left = "50%";
+        heartFeedback.style.top = "50%";
+        heartFeedback.style.transform = "translate(-50%, -50%)";
+        heartFeedback.style.fontSize = "50px";
+        heartFeedback.style.zIndex = "999";
+        heartFeedback.style.pointerEvents = "none";
+        heartFeedback.style.animation = "floatUp 1.5s ease-out forwards";
+        document.getElementById("girlfriend-screen").appendChild(heartFeedback);
+        
+        setTimeout(() => heartFeedback.remove(), 1500);
+
+        db.collection("dados").doc("status").set({
+            likes: firebase.firestore.FieldValue.increment(1)
+        }, { merge: true }).catch(err => console.error("Erro ao curtir:", err));
     }
 
     function sair() {
+        if(digitando) return; 
+
         document.getElementById("password").value = "";
+        document.getElementById("nova-mensagem").value = "";
+        document.getElementById("erro-login").classList.add("hidden");
+        document.getElementById("sucesso-msg").classList.add("hidden");
         document.getElementById("display-mensagem").classList.add("hidden");
+        document.getElementById("btn-amei").classList.add("hidden");
+        
+        ultimaMensagemExibida = ""; 
+        mensagensNaoLidas = [...mensagens]; 
+
         document.getElementById("boyfriend-screen").classList.add("hidden");
         document.getElementById("girlfriend-screen").classList.add("hidden");
         document.getElementById("login-screen").classList.remove("hidden");
     }
 
-    // Inicializa a escuta do banco de dados
-    carregarMensagens();
+    carregarDados();
 </script>
 
 </body>
