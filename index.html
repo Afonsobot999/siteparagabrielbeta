@@ -103,6 +103,15 @@
             line-height: 1.2;
         }
 
+        /* --- Estilo novo para o De Gabriel para Fabíola --- */
+        .from-to {
+            font-family: 'Dancing Script', cursive;
+            color: #d81b60;
+            font-size: 1.6rem;
+            margin-top: -5px; 
+            margin-bottom: 10px;
+        }
+
         .intro-text {
             font-style: italic;
             color: #666;
@@ -240,6 +249,7 @@
         @media (max-width: 480px) {
             .container { padding: 30px 20px; }
             h1.letter-title { font-size: 2.8rem; }
+            .from-to { font-size: 1.4rem; } /* Ajuste para celular */
             .intro-text { font-size: 15px; }
             .internal-screen h1 { font-size: 1.7rem; }
             .message-box { font-size: 16px; padding: 15px; }
@@ -254,6 +264,8 @@
     <div id="login-screen">
         <div class="pulsing-heart">❤️</div>
         <h1 class="letter-title">Nosso Cantinho</h1>
+        
+        <div class="from-to">De Gabriel para Fabíola</div>
         <p class="intro-text">Criei este espaço pensando em você, meu amor, com todo o carinho do mundo.</p>
         <h2 class="letter-subtitle">digite a senha para abrir esta carta</h2>
         
@@ -430,7 +442,7 @@
         btnGerar.innerText = "Escrevendo...";
 
         let i = 0;
-        const velocidade = 80; // AQUI ESTÁ A MUDANÇA: de 50 para 80! (milissegundos)
+        const velocidade = 80; 
 
         function digitar() {
             if (i < textoEscolhido.length) {
